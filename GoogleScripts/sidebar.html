@@ -4,8 +4,15 @@
     <base target="_top">
     <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
     <!-- The CSS package above applies Google styling to buttons and other elements. -->
-
+    
     <style>
+    /**
+    * Set the width of the input boxes for rows and columns.
+    */
+    input {
+    width: 20%;
+    }
+    <!--
     .branding-below {
       bottom: 30px;
       top: 0;
@@ -31,42 +38,49 @@
     .width-100 {
       width: 50%;
     }
+    -->
     </style>
   </head>
   <body>
     <div class="sidebar branding-below">
       <form>
         <div class="block col-contain">
-            <form>
-              Rows:<br>
-              <input type="text" name="rows" id="row_num"><br>
-              Columns:<br>
-              <input type="text" name="columns" id="col_num">
-            </form>
-            
-          <!--
-            <div>
-              <input type="radio" name="dest" id="radio-dest-en" value="en">
-              <label for="radio-dest-en">Columns</label>
-          </div>
-          -->
+           <!--
+           Create a 2 row form with left-aligned text. First input will be "rows", second will be "cols"
+           -->
+           <form>
+             <table>
+               <tr>
+                 <td align="left"> Rows:</td>
+                 <td align="left"><input type="text" id="rows" name="rows" /></td>
+               </tr>
+               <tr>
+                 <td align="left">Columns:</td>
+                 <td align="left"><input type="text" id="cols" name="cols" /></td>
+               </tr>
+             </table>
+           </form>
         
         <div class="block" id="button-bar">
           <button class="blue" id="build-table">Build Table</button>
         </div><form>
       </form>
     </div>
-
+    
+    <!--
+    The following will appear at the bottom of the add-on popup
+    src=url to my chosen image/icon
+    span will contain the text message displayed (ex. My Add-on v2.5)
+    -->
     <div class="sidebar bottom">
-      <img alt="Add-on logo" class="logo" src="https://zdnet1.cbsistatic.com/hub/i/r/2016/08/25/b70f3a5a-ea98-4fac-87b3-1c101a4c8dbd/resize/770xauto/68bca79636c0317300fc9bfc14a1f553/computer-virus.jpg" width="27" height="27">
-      <span class="gray branding-text">This is my table builder</span>
+      <img alt="Add-on logo" class="logo" src="https://ashleyfurniture.scene7.com/is/image/AshleyFurniture/D583-25-P1-KO?$AFHS-PDP-Main$" width="27" height="27">
+      <span class="gray branding-text">Table builder 1.0</span>
     </div>
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
       /**
-       * On document load, assign click handlers to each button and try to load the
-       * user's origin and destination language preferences if previously set.
+       * On document load, assign click handlers to each button
        */
       $(function() {
         $('#build-table').click(makeTable);
@@ -77,6 +91,10 @@
        * at the user's cursor or selection.
        */
       function makeTable() {
+      
+        var row = document.getElementById("rows").value;
+        var col = document.getElementById("cols").value;
+        
         this.disabled = true;
         $('#error').remove();
         google.script.run
@@ -90,7 +108,7 @@
                 element.disabled = false;
               })
             .withUserObject(this)
-            .makeTable(1, 2);
+            .makeTable(row, col);
       }
       /**
        * Inserts a div that contains an error message after a given element.
@@ -103,6 +121,5 @@
         $(element).after(div);
       }
     </script>
-    
    </body>
 </html>
